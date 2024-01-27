@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title> FSE Chst Application</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="styleschat.css">
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+ <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+
+ <style>
+
+    .my-message {
+        background-color: #f0f0f0; 
+        margin-bottom: 50px;
+        padding:10px;
+        border-radius:5px;
+    }
+    .other-message {
+        background-color: #f0f0f0; 
+        margin-bottom: 50px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    /* Style for message text */
+    .message-text {
+        margin: 1px 0;
+        color: #333; 
+    }
+
+ </style>
+ 
+</head>
+<body>
+<header class="header">
+   <h1>FSE Chat Room</h1>
+        <button class="logout-button" onclick="logout()">Logout</button>
+</header>   
+<div class="container">
+  <br>
+  <br>
+  <div id="messages"></div>
+  <textarea id="message" class="form-control" placeholder="Your Message Here">
+  </textarea>
+  <br>
+  <div id="footer">
+    <button id="send" class="btn btn-success">Send</button>
+ </div>
+ </div>
+</div>
+<script>
+    var socket = io();
+
+    //var socket = io();
+
+     // Event listening  for the logout button
+     $("#logout-button").click(() => {
+        logout();
+    });
+
+    // Logout function
+    function logout() {
+        console.log("User logged out");
+        socket.emit('logout'); 
+        window.location.href = "http://localhost:3000/"
+    }
+
+    function formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString();}
+
+    socket.on('connect', () => {
+        console.log("User made a websocket connection!");
+        $(() => {
+            const username = JSON.parse(localStorage.getItem('user')).username;
+            $("#send").click(()=>{
+                console.log("Message sent");
+                sendMessage({message: $("#message").val(), name: username});
+            })
+        })
+    });
+
+    // Add event handler for logout_message
+   socket.on('logout_message', (message) => {
+    alert(message); // Display the logout message to the user
+   });
+ 
+    socket.on('broadcast', addMessages);
+ 
+     function addMessages(message){
+        const username = JSON.parse(localStorage.getItem('user')).username;
+        console.log("Adding message to the UI");
+        const messageClass = (message.name === username) ? 'my-message' : 'other-message';
+        $("#messages").prepend(`<div class="${messageClass}"><h4>${(message.name === username) ? 'Me' : message.name}</h4><p class="message-text">${message.message}</p></div>`);
+
+    }
+    $(document).ready(() => {
+        getMessages();
+    });
+
+         
+     function getMessages(){
+       $.get('http://localhost:3000/messages', (data) => {
+         data.forEach(addMessages);
+       })
+     }
+ 
+     function sendMessage(message){
+        socket.emit('message', message);
+       //$.post('http://localhost:3000/messages', message)
+
+
+     }
+ </script>
+ </body>
+ </html>

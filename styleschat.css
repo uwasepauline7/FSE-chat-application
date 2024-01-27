@@ -1,0 +1,48 @@
+
+.header {
+    background-color: skyblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+}
+
+.header h1 {
+    margin: 0;
+    color: black;
+    
+}
+
+#footer {
+    background-color: skyblue; 
+    padding: 10px; 
+    text-align: center; 
+    border-top: 1px solid #ccc; 
+}
+
+.logout-button {
+    background-color: darkgoldenrod;
+    color: black;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: darkgoldenrod;
+}
+.container {
+    background-color:white;
+    padding: 10px;
+}
+
+#send {
+    background-color: darkgoldenrod;
+    color: black;
+    border-radius: 4px;
+}
+
+
+#send:hover {
+    background-color:darkgoldenrod;
+}

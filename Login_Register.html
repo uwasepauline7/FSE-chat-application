@@ -1,0 +1,116 @@
+<!-- register.html -->
+
+
+<html lang="en">
+<head>
+    <title>FSE Chat application </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<title>FSE Chat - Registration</title>
+</head>
+<body>
+
+    <h1> FSE Chatroom </h1>
+    <div class="container">
+        <h2>User Registration</h2>
+        <form id="registrationForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <div class="button-container">
+                <button type="button" id="register">register</button>
+                <button type="button" id="login">Login</button>
+                <div id="loginMessage"></div>
+            </div>
+            
+        </form>
+                               
+    </div>
+</body>
+</html>    
+    
+
+<script>
+
+    //buy now
+    document.querySelector("#login").addEventListener('click', evt => {
+        evt.preventDefault();
+        console.log("Logging in...");
+        var username = document.querySelector('#username');
+        var password = document.querySelector('#password');
+        var loginMessage = document.querySelector('#loginMessage');
+
+        if (username.value === "" || password.value === "") {
+            alert('Username and password are required.');
+            return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+         var response = this.responseText.trim();
+
+            if (this.status === 200) {
+                // Display success message
+                loginMessage.textContent = 'Login successful!';
+                console.log("Login successful: ", response);
+                localStorage.setItem('user', JSON.stringify({username: response}))
+                location.assign("/messages"); // navigating user to chats
+            } else {  
+            alert(this.responseText.trim());
+            }
+        };
+
+        xhr.open("POST", "/login");
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("username=" + encodeURIComponent(username.value) + "&password=" + encodeURIComponent(password.value));
+    });
+
+    document.querySelector("#register").addEventListener('click', evt => {
+        evt.preventDefault();
+
+        var username = document.querySelector('#username');
+        var password = document.querySelector('#password');
+
+        //username
+        if(username.value == "" || username.value == null){
+
+            alert('Username is required');
+            return false;
+
+        }
+
+        //password
+        else if(password.value == "" || password.value == null){
+
+            alert('Password is required');
+            return false;
+        }
+
+        else{
+
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function(){
+
+                alert(this.responseText.trim());
+
+            };
+
+            xhr.open("POST", "/register");
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.send("username="+username.value+"&password="+password.value);
+
+
+        }
+    });
+</script>
+
+
+
+    
+

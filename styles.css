@@ -1,0 +1,67 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+/* Add spacing between password input and button */
+input[type="password"] {
+    margin-bottom: 15px;
+  }
+  
+  /* Style the button */
+  .button-container {
+    margin-top: 20px; /* Add margin between buttons and input fields */
+}
+
+.button-container button {
+    background-color: skyblue; /* Set button background color to blue */
+    color: black; /* Set button text color to white */
+    padding: 10px 20px; /* Add padding to buttons */
+    margin-right: 10px; /* Add margin between buttons */
+    border: none; /* Remove button border */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    border-radius: 4px;
+}
+
+.button-container button:last-child {
+    margin-right: 0; /* Remove right margin for the last button */
+}
+
+ /* .button-container {
+    display: flex;
+    padding: 10px;
+    cursor:pointer;
+    /*background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }*/
+  
+  
+  /* Hover effect for the button */
+  button:hover {
+    background-color: skyblue;
+  }
+  
+
+  
